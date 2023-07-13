@@ -1,5 +1,6 @@
 package com.kit.feedback.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class Student {
     private List<Course> courses;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "student")
     private User user;
 
