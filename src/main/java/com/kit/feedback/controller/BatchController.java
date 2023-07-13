@@ -4,6 +4,8 @@ import com.kit.feedback.dto.BatchRequest;
 import com.kit.feedback.dto.BatchResponse;
 import com.kit.feedback.dto.BatchesResponse;
 import com.kit.feedback.services.BatchService;
+
+import io.swagger.annotations.Api;
 import io.swagger.models.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/batch")
+@Api(tags = "Batch")
 public class BatchController {
 
     private final BatchService batchService;

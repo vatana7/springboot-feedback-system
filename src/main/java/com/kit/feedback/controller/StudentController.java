@@ -2,6 +2,8 @@ package com.kit.feedback.controller;
 
 import com.kit.feedback.dto.StudentRequest;
 import com.kit.feedback.services.StudentService;
+
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/student")
 @RequiredArgsConstructor
+@Api(tags = "Student")
 public class StudentController {
 
     private final StudentService studentService;

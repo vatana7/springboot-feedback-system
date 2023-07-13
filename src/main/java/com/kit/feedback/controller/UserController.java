@@ -6,6 +6,8 @@ import com.kit.feedback.dto.UsersResponse;
 import com.kit.feedback.enums.Role;
 import com.kit.feedback.model.*;
 import com.kit.feedback.services.UserService;
+
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/api/v1/user")
 @RequiredArgsConstructor
+@Api(tags = "User")
 public class UserController {
 
     private final UserService userService;

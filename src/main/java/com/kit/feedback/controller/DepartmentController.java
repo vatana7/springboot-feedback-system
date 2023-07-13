@@ -4,6 +4,9 @@ import com.kit.feedback.dto.DepartmentsResponse;
 import com.kit.feedback.model.Department;
 import com.kit.feedback.dto.DepartmentResponse;
 import com.kit.feedback.services.DepartmentService;
+
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/department")
+@Api(tags = "Department")
 public class DepartmentController {
     private final DepartmentService departmentService;
     @Autowired

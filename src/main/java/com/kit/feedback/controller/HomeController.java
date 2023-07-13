@@ -4,6 +4,8 @@ import com.kit.feedback.model.Department;
 import com.kit.feedback.services.AuthenticationService;
 import com.kit.feedback.services.DepartmentService;
 import com.kit.feedback.services.MailSenderService;
+
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/demo")
+@Api(tags = "Demo")
 @RequiredArgsConstructor
 public class HomeController {
 

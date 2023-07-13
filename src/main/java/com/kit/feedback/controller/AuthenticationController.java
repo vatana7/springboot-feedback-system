@@ -6,6 +6,8 @@ import com.kit.feedback.dto.RegisterRequest;
 import com.kit.feedback.dto.ResetPasswordRequest;
 import com.kit.feedback.repository.UserRepository;
 import com.kit.feedback.services.AuthenticationService;
+
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/auth")
-@Slf4j
+@Api(tags = "Authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

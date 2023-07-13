@@ -3,6 +3,8 @@ package com.kit.feedback.controller;
 import com.kit.feedback.dto.FeedbackFormRequest;
 import com.kit.feedback.model.FeedbackForm;
 import com.kit.feedback.services.FeedbackFormService;
+
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/feedback-form")
 @RequiredArgsConstructor
+@Api(tags = "Feedback Form")
 public class FeedbackFormController {
     private final FeedbackFormService feedbackFormService;
     @PostMapping(value = "/create")
