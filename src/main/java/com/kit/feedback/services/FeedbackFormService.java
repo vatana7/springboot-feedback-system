@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,6 +20,11 @@ import java.util.UUID;
 public class FeedbackFormService {
     private final FeedbackFormRepository feedbackFormRepository;
     private final CourseRepository courseRepository;
+
+    public FeedbackForm getById(UUID id){
+        return feedbackFormRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cannot find feedback form, ID: " + id));
+    }
 
     public FeedbackForm create(FeedbackFormRequest request){
         var user = (User)Utility.getCurrentAuthentication().getPrincipal();
@@ -51,6 +54,23 @@ public class FeedbackFormService {
                 .content(feedbackForms.getContent())
                 .count(feedbackFormRepository.count())
                 .build();
+    }
+
+    public FeedbackForm edit(FeedbackFormRequest request){
+        var user = (User)Utility.getCurrentAuthentication().getPrincipal();
+        var feedbackForm = feedbackFormRepository.findById(request.getFeedbackFormId())
+                            .orElseThrow(() -> new RuntimeException("Cannot find feedback form, ID: " + request.getFeedbackFormId()));
+        feedbackForm.setTitle(request.getTitle());
+        feedbackForm.setDescription(request.getDescription());
+        feedbackForm.setQuestions(request.getQuestions());
+        feedbackForm.setUpdatedAt(LocalDateTime.now().toString());
+        feedbackForm.setUpdatedBy(user.getId());
+        try {
+            var saved = feedbackFormRepository.save(feedbackForm);
+            return saved;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public String delete(UUID id){

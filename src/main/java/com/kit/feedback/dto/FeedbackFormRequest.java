@@ -11,4 +11,5 @@ public class FeedbackFormRequest {
     private String title;
     private String description;
     private List<String> questions;
+    private UUID feedbackFormId;
 }

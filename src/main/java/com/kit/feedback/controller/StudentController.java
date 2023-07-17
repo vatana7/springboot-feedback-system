@@ -4,14 +4,18 @@ import com.kit.feedback.dto.StudentRequest;
 import com.kit.feedback.services.StudentService;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Student", description = "Student")
 @RestController
+@ApiIgnore
 @RequestMapping(value = "/api/v1/student")
 @RequiredArgsConstructor
-@Api(tags = "Student")
 public class StudentController {
 
     private final StudentService studentService;

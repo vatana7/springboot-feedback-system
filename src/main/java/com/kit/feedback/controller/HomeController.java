@@ -6,14 +6,18 @@ import com.kit.feedback.services.DepartmentService;
 import com.kit.feedback.services.MailSenderService;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Home", description = "Home")
 @RestController
+@ApiIgnore
 @RequestMapping("/api/v1/demo")
-@Api(tags = "Demo")
 @RequiredArgsConstructor
 public class HomeController {
 

@@ -4,6 +4,8 @@ import com.kit.feedback.dto.SemesterRequest;
 import com.kit.feedback.services.SemesterService;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import springfox.documentation.annotations.ApiIgnore;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Tag(name = "Semester", description = "Semester")
 @RestController
+@ApiIgnore
 @RequestMapping("/api/v1/semester")
-@Api(tags = "Semester")
 public class SemesterController {
     private final SemesterService semesterService;
     @Autowired

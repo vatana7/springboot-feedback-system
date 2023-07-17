@@ -6,6 +6,8 @@ import com.kit.feedback.dto.DepartmentResponse;
 import com.kit.feedback.services.DepartmentService;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import springfox.documentation.annotations.ApiIgnore;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Tag(name = "Department", description = "Department")
 @RestController
+@ApiIgnore
 @RequestMapping("/api/v1/department")
-@Api(tags = "Department")
 public class DepartmentController {
     private final DepartmentService departmentService;
     @Autowired

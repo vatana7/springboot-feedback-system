@@ -8,16 +8,20 @@ import com.kit.feedback.model.*;
 import com.kit.feedback.services.UserService;
 
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Tag(name = "User", description = "User")
+@ApiIgnore
 @RestController
 @RequestMapping(value = "/api/v1/user")
 @RequiredArgsConstructor
-@Api(tags = "User")
 public class UserController {
 
     private final UserService userService;

@@ -7,14 +7,18 @@ import com.kit.feedback.services.BatchService;
 
 import io.swagger.annotations.Api;
 import io.swagger.models.Response;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import springfox.documentation.annotations.ApiIgnore;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Tag(name = "Batch", description = "Batch")
 @RestController
+@ApiIgnore
 @RequestMapping("/api/v1/batch")
-@Api(tags = "Batch")
 public class BatchController {
 
     private final BatchService batchService;
