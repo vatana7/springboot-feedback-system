@@ -24,7 +24,7 @@ public class Lecturer {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "lecturer-course_id")
     @JsonManagedReference(value = "lecturer-courses")
     private List<Course> courses;

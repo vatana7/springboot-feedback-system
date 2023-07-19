@@ -33,6 +33,4 @@ public class Student {
     @JsonBackReference
     @JoinColumn(name = "student")
     private User user;
-
-//    Todo: field for courses and semester
 }
