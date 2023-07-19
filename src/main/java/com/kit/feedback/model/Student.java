@@ -24,7 +24,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "student-course_id")
     @JsonManagedReference(value ="student-courses")
     private List<Course> courses;

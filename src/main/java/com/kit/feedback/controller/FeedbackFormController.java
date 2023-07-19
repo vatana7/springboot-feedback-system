@@ -1,9 +1,11 @@
 package com.kit.feedback.controller;
 
 import com.kit.feedback.dto.FeedbackFormRequest;
+import com.kit.feedback.dto.FeedbackRequest;
 import com.kit.feedback.model.FeedbackForm;
 import com.kit.feedback.services.FeedbackFormService;
 
+import com.kit.feedback.services.FeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class FeedbackFormController {
 
     private final FeedbackFormService feedbackFormService;
+    private final FeedbackService feedbackService;
 
     @PostMapping(value = "/create")
     public ResponseEntity createFeedbackForm(@RequestBody FeedbackFormRequest request){
@@ -32,8 +35,17 @@ public class FeedbackFormController {
         }
     }
 
+    @PostMapping(value = "/submit")
+    public ResponseEntity submitFeeback(@RequestBody FeedbackRequest request){
+        try{
+            return ResponseEntity.ok(feedbackService.saveFeedback(request));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping(value = "/get")
-    public ResponseEntity getFeedbackForm(@RequestParam UUID id){
+    public ResponseEntity getFeedbackForm(@RequestParam Integer id){
         try{
             return ResponseEntity.ok(feedbackFormService.getById(id));
         }catch (Exception e){
@@ -59,8 +71,26 @@ public class FeedbackFormController {
         }
     }
 
+    @GetMapping(value = "/get-response")
+    public ResponseEntity getResponses(){
+        try{
+            return ResponseEntity.ok(feedbackFormService.getResponse());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/get-specific-response")
+    public ResponseEntity getResponses(@RequestParam(name = "id") UUID courseId){
+        try{
+            return ResponseEntity.ok(feedbackFormService.getSpecificResponse(courseId));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping(value = "/delete")
-    public ResponseEntity deleteFeedbackForm(@RequestParam UUID id){
+    public ResponseEntity deleteFeedbackForm(@RequestParam Integer id){
         try{
             return ResponseEntity.ok(feedbackFormService.delete(id));
         }catch (Exception e){

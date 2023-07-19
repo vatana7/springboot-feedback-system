@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,16 @@ public class StudentService {
                 .content(students.getContent())
                 .count(studentRepository.count())
                 .build();
+    }
+
+    public Student get(UUID id){
+        try {
+            var student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Cannot find student with Id: " + id));
+            return student;
+        } catch (Exception e) {
+            
+        }
+        return null;
     }
 
     public Student assignCourse(StudentRequest request){

@@ -1,5 +1,6 @@
 package com.kit.feedback.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kit.feedback.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,15 @@ public class User implements UserDetails {
     private String email;
     private String firstname;
     private String lastname;
+
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    private Student student;
+
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    private Lecturer lecturer;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

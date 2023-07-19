@@ -52,8 +52,17 @@ public class UserService {
             case STUDENT -> count = getAllUser.stream().filter(item -> item.getRole().equals(Role.STUDENT)).toList().size();
             default -> count = (int) userRepository.count();
         }
+        List<UserResponse> userResponse = response.stream().map(item -> UserResponse.builder()
+                .role(item.getRole())
+                .firstname(item.getFirstname())
+                .lastname(item.getLastname())
+                .id(item.getId())
+                .username(item.getUsername())
+                .authority(item.getAuthorities())
+                .email(item.getEmail())
+                .build()).collect(Collectors.toList());
         return UsersResponse.builder()
-                .content(response)
+                .content(userResponse)
                 .count(count)
                 .build();
     }
@@ -61,6 +70,7 @@ public class UserService {
     public UserResponse get(UUID id) {
         try{
             var user = userRepository.findById(id).orElseThrow();
+            
             return UserResponse.builder()
                     .role(user.getRole())
                     .firstname(user.getFirstname())

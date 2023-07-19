@@ -4,6 +4,7 @@ import com.kit.feedback.dto.AuthenticationRequest;
 import com.kit.feedback.dto.AuthenticationResponse;
 import com.kit.feedback.dto.RegisterRequest;
 import com.kit.feedback.dto.ResetPasswordRequest;
+import com.kit.feedback.enums.Role;
 import com.kit.feedback.model.*;
 import com.kit.feedback.repository.LecturerRepository;
 import com.kit.feedback.repository.ResetPasswordRepository;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -50,15 +52,15 @@ public class AuthenticationService {
                     .firstname(request.getFirstname())
                     .lastname(request.getLastname())
                     .build();
-            var postUser = userRepository.save(user);
-            var id = postUser.getId();
             //Save user to STUDENT, LECTURER table
+            UUID id= null;
             switch (request.getRole()){
                 case STUDENT -> {
                     var saved = studentRepository.save(Student.builder()
                             .name(user.getName())
                             .user(user)
                             .build());
+                    user.setStudent(saved);
                     id = saved.getId();
                 }
                 case LECTURER -> {
@@ -66,9 +68,11 @@ public class AuthenticationService {
                             .name(user.getName())
                             .user(user)
                             .build());
+                    user.setLecturer(saved);
                     id = saved.getId();
                 }
             }
+            var postUser = userRepository.save(user);
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
                     .token(jwtToken)
@@ -77,7 +81,8 @@ public class AuthenticationService {
                     .role(request.getRole())
                     .email(request.getEmail())
                     .username(request.getUsername())
-                    .id(id)
+                    .accountId(postUser.getId())
+                    .userId(id)
                     .build();
         } catch (Exception e){
             log.error(e.getMessage());
@@ -94,6 +99,15 @@ public class AuthenticationService {
         );
         var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        var role = user.getRole();
+        UUID id;
+        if(role.equals(Role.STUDENT)){
+            id = studentRepository.findById(user.getStudent().getId()).orElseThrow().getId();
+        } else if(role.equals(Role.LECTURER)){
+            id = lecturerRepository.findById(user.getLecturer().getId()).orElseThrow().getId();
+        } else {
+            id = user.getId();
+        }
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .lastname(user.getLastname())
@@ -101,7 +115,8 @@ public class AuthenticationService {
                 .role(user.getRole())
                 .email(user.getEmail())
                 .username(user.getUsername())
-                .id(user.getId())
+                .accountId(user.getId())
+                .userId(id)
                 .build();
     }
 

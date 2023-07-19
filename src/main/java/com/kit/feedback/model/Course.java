@@ -1,6 +1,7 @@
 package com.kit.feedback.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Course extends BaseEntity {
 
     private String name;
     private Integer credit;
+
     @ManyToOne
     @JsonBackReference(value = "lecturer-courses")
     private Lecturer lecturer;
@@ -31,7 +33,7 @@ public class Course extends BaseEntity {
     @JsonBackReference(value = "student-courses")
     private Student student;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     @JsonManagedReference(value = "course-feedbackForms")
     private List<FeedbackForm> feedbackForms;
 

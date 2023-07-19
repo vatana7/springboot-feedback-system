@@ -11,6 +11,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Tag(name = "Student", description = "Student")
 @RestController
 @ApiIgnore
@@ -24,6 +26,15 @@ public class StudentController {
     public ResponseEntity getAllStudents(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size){
         try{
             return ResponseEntity.ok(studentService.getStudents(page, size));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity findStudentById(@RequestParam UUID id){
+        try {
+            return ResponseEntity.ok(studentService.get(id));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

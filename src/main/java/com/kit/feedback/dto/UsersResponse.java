@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersResponse {
-    private List<User> content;
+    private List<UserResponse> content;
     private Integer count;
 }

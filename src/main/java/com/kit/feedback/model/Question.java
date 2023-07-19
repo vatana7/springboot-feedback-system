@@ -1,6 +1,7 @@
 package com.kit.feedback.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,15 +16,19 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     private String questionText;
     private Integer rating;
     private Integer questionNumber;
 
     @ManyToOne
-    @JsonBackReference(value = "feedbackForm-questions")
+    @JsonIgnore
     private FeedbackForm feedbackForm;
+
+    @ManyToOne
+    @JsonIgnore
+    private Feedback feedback;
 
 }

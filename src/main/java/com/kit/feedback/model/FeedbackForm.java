@@ -1,6 +1,7 @@
 package com.kit.feedback.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +16,8 @@ import java.util.UUID;
 @Builder
 public class FeedbackForm extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String title;
     private String description;
 
