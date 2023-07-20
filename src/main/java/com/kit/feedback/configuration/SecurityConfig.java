@@ -63,6 +63,7 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         //Cannot set allowedOrigin to * because it will not accept any request
         config.addAllowedOrigin(GlobalVariables.clientUrl);
+        config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
