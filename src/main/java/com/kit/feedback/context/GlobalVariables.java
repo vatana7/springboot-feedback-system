@@ -1,5 +1,5 @@
 package com.kit.feedback.context;
 
 public class GlobalVariables {
-    public static String clientUrl = "http://localhost:3000";
+    public static String clientUrl = "https://student-feedback-system-app.vercel.app";
 }
