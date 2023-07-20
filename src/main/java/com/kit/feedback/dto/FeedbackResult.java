@@ -16,4 +16,5 @@ public class FeedbackResult {
     private Integer question_number;
     private Integer rating;
     private Long count;
+    private String question_text;
 }

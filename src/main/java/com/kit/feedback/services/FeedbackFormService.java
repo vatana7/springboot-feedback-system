@@ -129,18 +129,19 @@ public class FeedbackFormService {
         var course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("No course Id: " + courseId));
         var feedbackFormId = course.getFeedbackForms().get(0).getId();
 //        var result = questionRepository.findResponseById(feedbackFormId);
-        String sql = "SELECT question_number, rating, COUNT(*) AS count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY question_number, rating ORDER BY question_number, rating ASC";
+        String sql = "SELECT question_text, question_number, rating, COUNT(*) AS count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY question_text,question_number, rating ORDER BY question_text,question_number, rating ASC";
 
         List<Object[]> results = entityManager.createNativeQuery(sql).getResultList();
 
         List<FeedbackResult> feedbackResults = new ArrayList<>();
 
         for (Object[] result : results) {
-            Integer questionNumber = (Integer) result[0];
-            Integer rating = (Integer) result[1];
-            Long count = ((Number) result[2]).longValue();
+            String questionText = ((String) result[0]);
+            Integer questionNumber = (Integer) result[1];
+            Integer rating = (Integer) result[2];
+            Long count = ((Number) result[3]).longValue();
 
-            FeedbackResult feedbackResult = new FeedbackResult(questionNumber, rating, count);
+            FeedbackResult feedbackResult = new FeedbackResult(questionNumber, rating, count, questionText);
             feedbackResults.add(feedbackResult);
         }
         return feedbackResults;
