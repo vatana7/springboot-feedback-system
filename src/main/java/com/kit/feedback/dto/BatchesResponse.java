@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BatchesResponse {
-    private List<Batch> content;
+    private List<BatchResponse> content;
     private long count;
 }

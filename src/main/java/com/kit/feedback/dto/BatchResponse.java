@@ -1,6 +1,7 @@
 package com.kit.feedback.dto;
 
 import com.kit.feedback.model.BaseEntity;
+import com.kit.feedback.model.Department;
 import com.kit.feedback.model.Semester;
 import com.kit.feedback.model.User;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,5 @@ public class BatchResponse {
     private String updatedAt;
     private UUID updatedBy;
     private List<Semester> semesters;
+    private String departmentName;
 }

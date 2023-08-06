@@ -10,6 +10,8 @@ import com.kit.feedback.repository.DepartmentRepository;
 import com.kit.feedback.utils.Utility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.hibernate.mapping.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -31,8 +34,20 @@ public class BatchService {
         try{
             PageRequest pageRequest = PageRequest.of(page, size);
             var batches = batchRepository.findAll(pageRequest);
+            var response = new ArrayList<BatchResponse>();
+            for (Batch object : batches) {
+                response.add(BatchResponse.builder()
+                        .id(object.getId())
+                        .batchNumber(object.getBatchNumber())
+                        .createdAt(object.getCreatedAt())
+                        .createdBy(object.getCreatedBy())
+                        .updatedAt(object.getUpdatedAt())
+                        .updatedBy(object.getUpdatedBy())
+                        .departmentName(object.getDepartment().getName())
+                        .build());
+            }
             return BatchesResponse.builder()
-                    .content(batches.getContent())
+                    .content(response)
                     .count(batchRepository.count())
                     .build();
         }catch (Exception e){
@@ -86,6 +101,7 @@ public class BatchService {
                 .updatedAt(response.getUpdatedAt())
                 .updatedBy(response.getUpdatedBy())
                 .semesters(response.getSemesters())
+                .departmentName(response.getDepartment().getName())
                 .build();
     }
 
