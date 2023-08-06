@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @Builder
 public class SemestersResponse {
-    private List<Semester> content;
+    private List<SemesterResponse> content;
     private long count;
 }

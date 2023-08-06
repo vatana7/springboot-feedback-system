@@ -1,6 +1,7 @@
 package com.kit.feedback.services;
 
 import com.kit.feedback.dto.SemesterRequest;
+import com.kit.feedback.dto.SemesterResponse;
 import com.kit.feedback.dto.SemestersResponse;
 import com.kit.feedback.model.Semester;
 import com.kit.feedback.model.User;
@@ -9,6 +10,8 @@ import com.kit.feedback.repository.SemesterRepository;
 import com.kit.feedback.utils.Utility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.hibernate.mapping.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -74,15 +78,39 @@ public class SemesterService {
     public SemestersResponse getSemesters(Integer page, Integer size){
         PageRequest pageRequest = PageRequest.of(page, size);
         var semesters = semesterRepository.findAll(pageRequest).getContent();
+        var response = new ArrayList<SemesterResponse>();
+        for (var semester : semesters) {
+           var built = SemesterResponse.builder()
+                .credit(semester.getCredit())
+                .courses(semester.getCourses())
+                .endDate(semester.getEndDate())
+                .startDate(semester.getStartDate())
+                .semesterNumber(semester.getSemesterNumber())
+                .id(semester.getId())
+                .batchNumber(semester.getBatch().getBatchNumber())
+                .department(semester.getBatch().getDepartment().getName())
+                .build();
+            response.add(built);
+        }
         return SemestersResponse.builder()
                 .count(semesterRepository.count())
-                .content(semesters)
+                .content(response)
                 .build();
     }
 
-    public Semester get(UUID id){
+    public SemesterResponse get(UUID id){
         var semester = semesterRepository.getSemesterById(id).orElseThrow(() -> new RuntimeException("Semester Id doesn't exist: " + id.toString()));
-        return semester;
+        var response = SemesterResponse.builder()
+                .credit(semester.getCredit())
+                .courses(semester.getCourses())
+                .endDate(semester.getEndDate())
+                .startDate(semester.getStartDate())
+                .semesterNumber(semester.getSemesterNumber())
+                .id(semester.getId())
+                .batchNumber(semester.getBatch().getBatchNumber())
+                .department(semester.getBatch().getDepartment().getName())
+                .build();
+        return response;
     }
 
     public Semester edit(SemesterRequest request){
