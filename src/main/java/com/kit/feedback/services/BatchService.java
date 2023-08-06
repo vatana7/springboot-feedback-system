@@ -43,9 +43,9 @@ public class BatchService {
 
     public BatchResponse create(BatchRequest request){
         try{
-            if(batchRepository.findBatchByBatchNumber(request.getBatchNumber()).isPresent()){
-                throw new RuntimeException("Batch number already exist");
-            }
+            // if(batchRepository.findBatchByBatchNumber(request.getBatchNumber()).isPresent()){
+            //     throw new RuntimeException("Batch number already exist");
+            // }
             User user = (User) Utility.getCurrentAuthentication().getPrincipal();
             Department department = departmentRepository.findById(request.getDepartmentId()).orElseThrow();
             var batch = Batch.builder()

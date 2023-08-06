@@ -157,15 +157,28 @@ public class FeedbackFormService {
 
                 //Get total vote in that course
                 var getCourse = courseRepository.findById(item.getId()).orElseThrow(() -> new RuntimeException("No course Id: " + item.getId()));
-                var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
-                var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
-                var count = entityManager.createNativeQuery(sql).getSingleResult();
-                var course = CourseResponse.builder().build();
-                course.setId(item.getId());
-                course.setName(item.getName());
-                course.setLecturerName(item.getLecturer().getName());
-                course.setTotalVote(((Number) count).intValue());
-                courseResponses.add(course);
+
+                if (getCourse.getFeedbackForms().isEmpty()) {;} else {
+                    var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
+                    var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
+
+                    int totalVote = 0;
+                    try {
+                        var count = entityManager.createNativeQuery(sql).getSingleResult();
+                        totalVote = ((Number) count).intValue();
+                    } catch (Exception e) {
+                        // Handle the error gracefully, for example, log the error
+                        System.err.println("Error executing SQL query: " + e.getMessage());
+                    }
+
+                    var course = CourseResponse.builder()
+                            .id(item.getId())
+                            .name(item.getName())
+                            .lecturerName(item.getLecturer().getName())
+                            .totalVote(totalVote)
+                            .build();
+                    courseResponses.add(course);
+                }
             });
             return courseResponses;
         } else if (role.equals(Role.LECTURER)){
@@ -174,32 +187,57 @@ public class FeedbackFormService {
 
                 //Get total vote in that course
                 var getCourse = courseRepository.findById(item.getId()).orElseThrow(() -> new RuntimeException("No course Id: " + item.getId()));
-                var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
-                var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
-                var count = entityManager.createNativeQuery(sql).getSingleResult();
-                var course = CourseResponse.builder().build();
-                course.setId(item.getId());
-                course.setName(item.getName());
-                course.setLecturerName(item.getLecturer().getName());
-                course.setTotalVote(((Number) count).intValue());
-                courseResponses.add(course);
+
+                if (getCourse.getFeedbackForms().isEmpty()) {;} else {
+                    var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
+                    var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
+
+                    int totalVote = 0;
+                    try {
+                        var count = entityManager.createNativeQuery(sql).getSingleResult();
+                        totalVote = ((Number) count).intValue();
+                    } catch (Exception e) {
+                        // Handle the error gracefully, for example, log the error
+                        System.err.println("Error executing SQL query: " + e.getMessage());
+                    }
+
+                    var course = CourseResponse.builder()
+                            .id(item.getId())
+                            .name(item.getName())
+                            .lecturerName(item.getLecturer().getName())
+                            .totalVote(totalVote)
+                            .build();
+                    courseResponses.add(course);
+                }
             });
             return courseResponses;
         } else {
             var courses =  courseRepository.findAll();
             courses.forEach(item -> {
 
-                //Get total vote in that course
                 var getCourse = courseRepository.findById(item.getId()).orElseThrow(() -> new RuntimeException("No course Id: " + item.getId()));
-                var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
-                var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
-                var count = entityManager.createNativeQuery(sql).getSingleResult();
-                var course = CourseResponse.builder().build();
-                course.setId(item.getId());
-                course.setName(item.getName());
-                course.setLecturerName(item.getLecturer().getName());
-                course.setTotalVote(((Number) count).intValue());
-                courseResponses.add(course);
+
+                if (getCourse.getFeedbackForms().isEmpty()) {;} else {
+                    var feedbackFormId = getCourse.getFeedbackForms().get(0).getId();
+                    var sql = "SELECT Count(rating) AS total_rating_count FROM question WHERE feedback_form_id = " + feedbackFormId + " GROUP BY feedback_form_id";
+
+                    int totalVote = 0;
+                    try {
+                        var count = entityManager.createNativeQuery(sql).getSingleResult();
+                        totalVote = ((Number) count).intValue();
+                    } catch (Exception e) {
+                        // Handle the error gracefully, for example, log the error
+                        System.err.println("Error executing SQL query: " + e.getMessage());
+                    }
+
+                    var course = CourseResponse.builder()
+                            .id(item.getId())
+                            .name(item.getName())
+                            .lecturerName(item.getLecturer().getName())
+                            .totalVote(totalVote)
+                            .build();
+                    courseResponses.add(course);
+                }
             });
             return courseResponses;
         }

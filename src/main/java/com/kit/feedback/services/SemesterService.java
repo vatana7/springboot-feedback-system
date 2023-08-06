@@ -29,11 +29,11 @@ public class SemesterService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
 
     public Semester create(SemesterRequest request){
-        //Check if already exist
-        var exist = semesterRepository.findBySemesterNumber(request.getSemesterNumber());
-        if(exist.isPresent()){
-            throw new RuntimeException("Semester number already exist");
-        }
+
+        // var exist = semesterRepository.findBySemesterNumber(request.getSemesterNumber());
+        // if(exist.isPresent()){
+        //     throw new RuntimeException("Semester number already exist");
+        // }
         var batch = batchRepository.getBatchById(request.getId()).orElseThrow(
                 () -> new RuntimeException("Batch not found with ID: " + request.getId())
             );
