@@ -1,10 +1,13 @@
 package com.kit.feedback.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -24,10 +27,4 @@ public class FeedbackForm extends BaseEntity{
     private Course course;
     @ElementCollection
     private List<String> questions;
-
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "feedbackForm")
-    private List<Question> listOfQuestions;
-
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "feedbackForm")
-    private List<Feedback> listOfFeedbacks;
 }
