@@ -34,11 +34,11 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private Student student;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private Lecturer lecturer;
 
